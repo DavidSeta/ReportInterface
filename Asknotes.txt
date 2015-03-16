@@ -1,0 +1,25 @@
+{ReportInterface.ASKWebServices.KeywordReportStruct}
+    ad_id: 626850436
+    ad_idField: 626850436
+    ad_keyword_id: 351952545
+    ad_keyword_idField: 351952545
+    ad_keyword_state: "on"
+    ad_keyword_stateField: "on"
+    average_cpc: 0.60000000000000009
+    average_cpcField: 0.60000000000000009
+    average_position: 1.0
+    average_positionField: 1.0
+    campaign_id: 906927
+    campaign_idField: 906927
+    clicks: 30
+    clicksField: 30
+    cost: 18.0
+    costField: 18.0
+    ctr: 0.017042
+    ctrField: 0.017042
+    keyword: "reno resorts"
+    keywordField: "reno resorts"
+    match_type_id: 1
+    match_type_idField: 1
+    max_cpc: 1.0
+    max_cpcField: 1.0

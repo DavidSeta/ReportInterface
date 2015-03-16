@@ -1,0 +1,322 @@
+frmMain.vb:  
+
+Execute() Line 214
+
+STEP 1 get ReportID 
+
+Invoked at Line 237 Start_ALL() Line 599 --> Start_Verizon() Line 890.  
+Dim ReportID AS String = VW.RequestDailyReportID(Client - DataStructure w/all Params for WebService)  VerizonReports.vb Line 118 Invoking 
+WS scheduleReport(ReportType, StartDate, EndDate) AS String (ReportID)
+
+
+STEP 2 get URL for DL of Report
+
+Invoked at Line 243 FxN Me.Loop_DownloadProcess Line 459  --> Fxn Loop_Download_Verizon() Line 584  --> GetURL_Verizon() Line 936 Invoking 
+Dim sURL As String = Me.VW.RequestReportURL(Client)  VerizonReports.vb Line 191 Invoking WS getReportURL(reportId) AS String ()
+
+STEP 3 DL from URL
+
+Invoked at Lin 590 Download_Verizon_Once() Line 978  Me.VW.DownloadReport(Client) VerizonReports.vb Line 236 Invokes FxN SaveFile Line 399 using System.Net.WebClient.DownloadFile(sURI, sFileName)
+
+
+
+STEP 4 Deleted report off server
+
+In DownloadReport(Client) VerizonReports.vb Line 280 --> DeleteReport(sClientID, sReportID) VerizonReports.vb Line 328 Invokes 
+WS deleteReport(reportId) AS String
+
+
+
+
+
+
+
+
+
+Class ReportingService  was spService
+
+
+
+
+
+        Private usernameField As string2    was usernameValueField			string2 was username
+
+        Private passwordField As [string]   was passwordValueField			[string] was password
+
+        Private companyIdField As string1   was companyIdValueField			string1 was companyId
+
+
+        Private scheduleReportOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private getDailySummaryReportOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private getReportURLOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private getDailyReportOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private getReportListOperationCompleted As System.Threading.SendOrPostCallback
+
+	Private deleteReportOperationCompleted As System.Threading.SendOrPostCallback
+
+Public Property password() As [string]							Was passwordvalue()
+            Get
+                Return Me.passwordField
+            End Get
+            Set(ByVal value As [string])
+                Me.passwordField = value
+            End Set
+End Property
+
+Public Property companyId() As string1							was companyIdvalue()
+            Get
+                Return Me.companyIdField
+            End Get
+            Set(ByVal value As string1)
+                Me.companyIdField = value
+            End Set
+End Property
+
+Public Property username() As string2							was usernamevalue()
+            Get
+                Return Me.usernameField
+            End Get
+            Set(ByVal value As string2)
+                Me.usernameField = value
+            End Set
+End Property
+
+====================================================================================================================================
+P R E V I O U S
+====================================================================================================================================
+        Private usernameValueField As username
+
+        Private passwordValueField As password
+
+        Private companyIdValueField As companyId
+
+        Private scheduleReportOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private getDailySummaryReportOperationCompleted As System.Threading.SendOrPostCallback
+
+*****   Private getReportOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private getReportURLOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private getDailyReportOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private getReportListOperationCompleted As System.Threading.SendOrPostCallback
+
+        Private deleteReportOperationCompleted As System.Threading.SendOrPostCallback
+
+        Public Property usernameValue() As username
+            Get
+                Return Me.usernameValueField
+            End Get
+            Set(ByVal value As username)
+                Me.usernameValueField = Value
+            End Set
+        End Property
+
+        Public Property passwordValue() As password
+            Get
+                Return Me.passwordValueField
+            End Get
+            Set(ByVal value As password)
+                Me.passwordValueField = Value
+            End Set
+        End Property
+
+        Public Property companyIdValue() As companyId
+            Get
+                Return Me.companyIdValueField
+            End Get
+            Set(ByVal value As companyId)
+                Me.companyIdValueField = Value
+            End Set
+        End Property
+
+
+
+
+
+===============================================================================================================================
+P R E V I O U S 
+===============================================================================================================================
+<System.Web.Services.Protocols.SoapHeaderAttribute("passwordValue"), _
+ System.Web.Services.Protocols.SoapHeaderAttribute("companyIdValue"), _
+ System.Web.Services.Protocols.SoapHeaderAttribute("usernameValue"), _
+ System.Web.Services.Protocols.SoapDocumentMethodAttribute("http//my.superpages.com/api/scheduleReport", RequestNamespace:="https://my.superpages.com/api", ResponseNamespace:="https://my.superpages.com/api", Use:=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle:=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)> _
+
+Public Function scheduleReport(ByVal parameters As ScheduleReportRequest) As ScheduleReportResponse
+  Dim results() As Object = Me.Invoke("scheduleReport", New Object() {parameters})
+  Return CType(results(0), ScheduleReportResponse)
+End Function
+
+
+
+===============================================================================================================================
+N E W 
+===============================================================================================================================
+<System.Web.Services.Protocols.SoapHeaderAttribute("password"), _
+ System.Web.Services.Protocols.SoapHeaderAttribute("companyId"), _
+ System.Web.Services.Protocols.SoapHeaderAttribute("username"), _
+ System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace:="https://services.superpages.com/spapi/v2", ResponseNamespace:="https://services.superpages.com/spapi/v2", Use:=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle:=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)> _
+
+Public Function scheduleReport(<System.Xml.Serialization.XmlElementAttribute(IsNullable:=True)> ByVal reportType As String, <System.Xml.Serialization.XmlElementAttribute(IsNullable:=True)> ByVal startDate As String, <System.Xml.Serialization.XmlElementAttribute(IsNullable:=True)> ByVal endDate As String) As <System.Xml.Serialization.XmlElementAttribute(IsNullable:=True)> String
+            Dim results() As Object = Me.Invoke("scheduleReport", New Object() {reportType, startDate, endDate})
+            Return CType(results(0), String)
+End Function
+
+
+===============================================================================================================================
+P R E V I O U S 
+===============================================================================================================================
+<frmMain.vb line 890 >
+        Private Sub Start_Verizon()
+        Dim msg As String = "Starting Verizon Reports"
+        MyStatus(msg & "...")
+
+        For Each Client As Clients In Me.ClientList.Clients
+            If Client.Verizon.Has_AccountID Then
+                Client.Verizon.ClearDownloadInfo()
+                Client.Verizon.StartDate = StartDate()
+                Client.Verizon.EndDate = EndDate()
+
+                If VW.DoesFileExist(Client) = False Then
+                    MyStatus(msg & " (" & Client.Name & ")...")
+                    Log(Client.LogName & ": Requesting Verizon Report")
+
+                    Dim ReportID As String = VW.ReqestDailyReportID(Client)
+                    Log(Client.LogName & ": Verizon ID: " & ReportID)
+
+                    Select Case ReportID
+                        Case "ID ERROR"
+                            Me.ClientList.Done_InvalidID(Client.Index, WebService.Verizon)
+
+                        Case "ERROR"
+                            Me.ClientList.Done_Failed(Client.Index, WebService.Verizon)
+
+                        Case "RETRY"
+                            Me.ClientList.Done_Failed(Client.Index, WebService.Verizon)
+
+                        Case "TIMEOUT"
+                            Me.ClientList.Done_Failed(Client.Index, WebService.Verizon)
+
+                        Case Else
+                            If IsNumeric(ReportID) Then
+                                Me.ClientList.Done_ReportID(Client.Index, WebService.Verizon, ReportID)
+                            End If
+                    End Select
+                    Me.ClientList.Done_Request(Client.Index, WebService.Verizon)
+                Else
+                    Me.ClientList.Done_Download(Client.Index, WebService.Verizon)
+                End If
+                Application.DoEvents()
+            End If
+        Next
+
+        MyStatus(msg & "...Done")
+    EndSub
+
+<VerizonReports.vb line 117>
+'==================================================================================================================================================
+        ' Use these for the Auto Stuff
+        '==================================================================================================================================================
+        Public Function ReqestDailyReportID(ByVal client As Clients) As String
+
+            Dim sClientID As String = client.Verizon.AccountID
+            SetClient(sClientID)
+
+            Dim Request As New VerizonWebServices.ScheduleReportRequest
+            If client.Verizon.MultiDayReport Then
+                Request = Me.CreateKeywordReportRequest(Me.Username, Me.Password, sClientID, client.Verizon.StartDate, client.Verizon.EndDate)
+            Else
+                Request = Me.CreateKeywordReportRequest(Me.Username, Me.Password, sClientID, client.Verizon.EndDate)
+            End If
+
+            Dim sReportID As String = ""
+            Dim oResult As VerizonWebServices.ScheduleReportResponse = Nothing
+            Try
+                oResult = myService.scheduleReport(Request)
+            Catch ex As Exception
+                Debug.Print("Verizon Schedule Report Error on Client " & client.Name & " - " & ex.Message)
+                Select Case Left(ex.Message.ToLower, 18)
+                    Case "invalid company id"
+                        sReportID = "ID ERROR"
+
+                    Case "the underlying con" 'the underlying connection was closed:
+                        sReportID = "RETRY"
+
+                    Case "the operation has " 'the operation has timed out"
+                        sReportID = "TIMEOUT"
+
+                    Case Else
+                        Debug.Print("Unknown Verizon Schedule Report Error on Client " & client.Name & " -- " & ex.Message)
+                        sReportID = "ERROR"
+
+                End Select
+                Log("Verizon ReportID ERROR ON " & client.LogName(True) & ex.Message)
+
+            End Try
+
+            If sReportID = "" Then
+                If Not IsNothing(oResult) Then sReportID = oResult.reportId
+            End If
+
+            Debug.Print("Client: " & client.Name & " -- ReportID: " & sReportID)
+            Return sReportID
+        End Function
+
+        Public Sub ReqestDailyReportID_Async(ByVal client As Clients)
+            Dim sClientID As String = client.Verizon.AccountID
+            SetClient(sClientID)
+
+            Dim Request As New VerizonWebServices.ScheduleReportRequest
+            If client.Verizon.MultiDayReport Then
+                Request = Me.CreateKeywordReportRequest(Me.Username, Me.Password, sClientID, client.Verizon.StartDate, client.Verizon.EndDate)
+            Else
+                Request = Me.CreateKeywordReportRequest(Me.Username, Me.Password, sClientID, client.Verizon.EndDate)
+            End If
+
+            myService.scheduleReportAsync(Request, client.Index)
+        End Sub
+
+
+
+#Region " CreateKeywordReportRequest (Overloaded)"
+        Public Function CreateKeywordReportRequest(ByVal params As ReportParameters) As VerizonWebServices.ScheduleReportRequest
+
+            Dim Request As New VerizonWebServices.ScheduleReportRequest
+            Request.companyId = params.CompanyID
+            Request.endDate = params.EndDate.ToString("MM/dd/yyyy")
+            Request.password = params.Password
+            Request.reportType = params.strReportType
+            Request.startDate = params.StartDate.ToString("MM/dd/yyyy")
+            Request.username = params.UserName
+            Return Request
+        End Function
+
+        Public Function CreateKeywordReportRequest(ByVal sUserName As String, ByVal sPassword As String, ByVal sCompanyID As String, ByVal dSingleDate As Date) As VerizonWebServices.ScheduleReportRequest
+
+            Dim Param As New ReportParameters
+            Param.StartDate = dSingleDate
+            Param.EndDate = dSingleDate
+            Param.UserName = sUserName
+            Param.Password = sPassword
+            Param.CompanyID = sCompanyID
+            Return Me.CreateKeywordReportRequest(Param)
+        End Function
+
+        Public Function CreateKeywordReportRequest(ByVal sUsername As String, ByVal sPassword As String, ByVal sCompanyID As String, ByVal dStartDate As Date, ByVal dEndDate As Date) As VerizonWebServices.ScheduleReportRequest
+
+            Dim Param As New ReportParameters
+            Param.StartDate = dStartDate
+            Param.EndDate = dEndDate
+            Param.UserName = sUsername
+            Param.Password = sPassword
+            Param.CompanyID = sCompanyID
+            Return Me.CreateKeywordReportRequest(Param)
+        End Function
+#End Region 'CreateKeywordReportRequest (Overloaded)
+
+

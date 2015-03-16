@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="https://services.superpages.com/spapi/v2" xmlns:tns="https://services.superpages.com/spapi/v2" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns:ns1="http://common.spapi.idearc.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="https://services.superpages.com/spapi/v2">
+<xsd:element name="scheduleReport">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="reportType" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="startDate" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="endDate" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="scheduleReportResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="scheduleReportResult" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getReportURL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="reportId" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getReportURLResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="getReportURLResult" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="deleteReport">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="reportId" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="deleteReportResponse">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="getDailySummaryReport">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="date" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getDailySummaryReportResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="getDailySummaryReportResult" nillable="true" type="ns1:DailySummaryReport"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getReportList">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="getReportListResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="getReportListResult" nillable="true" type="ns1:ReportList"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getDailyReport">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="date" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="getDailyReportResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="getDailyReportResult" nillable="true" type="ns1:ArrayOfDailyReport"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+ <xsd:element name="username">
+	<xsd:simpleType>
+	<xsd:restriction base="xsd:string" />
+	</xsd:simpleType>
+	</xsd:element>
+
+      <xsd:element name="password">
+	<xsd:simpleType>
+	<xsd:restriction base="xsd:string" />
+	</xsd:simpleType>
+	</xsd:element>
+      <xsd:element name="companyId">
+	<xsd:simpleType>
+	<xsd:restriction base="xsd:string" />
+	</xsd:simpleType>
+	</xsd:element></xsd:schema>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://common.spapi.idearc.com">
+<xsd:complexType name="DailySummaryReport">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="averagePosition" type="xsd:string"/>
+<xsd:element minOccurs="0" name="billableClicks" type="xsd:string"/>
+<xsd:element minOccurs="0" name="budget" type="xsd:string"/>
+<xsd:element minOccurs="0" name="campaigns" type="xsd:string"/>
+<xsd:element minOccurs="0" name="categories" type="xsd:string"/>
+<xsd:element minOccurs="0" name="catkeyFlag" type="xsd:string"/>
+<xsd:element minOccurs="0" name="clicks" type="xsd:string"/>
+<xsd:element minOccurs="0" name="ctr" type="xsd:string"/>
+<xsd:element minOccurs="0" name="customer" type="xsd:string"/>
+<xsd:element minOccurs="0" name="date" type="xsd:string"/>
+<xsd:element minOccurs="0" name="geographies" type="xsd:string"/>
+<xsd:element minOccurs="0" name="impressions" type="xsd:string"/>
+<xsd:element minOccurs="0" name="maxCpc" type="xsd:string"/>
+<xsd:element minOccurs="0" name="monthToDateBillableClicks" type="xsd:string"/>
+<xsd:element minOccurs="0" name="monthTODateSpend" type="xsd:string"/>
+<xsd:element minOccurs="0" name="spend" type="xsd:string"/>
+<xsd:element minOccurs="0" name="spendPercent" type="xsd:string"/>
+<xsd:element minOccurs="0" name="status" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="ReportList">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="dateCreated" type="xsd:string"/>
+<xsd:element minOccurs="0" name="report" type="ns1:ArrayOfReport"/>
+<xsd:element minOccurs="0" name="numberOfRows" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="ArrayOfReport">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="Report" nillable="true" type="ns1:Report"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="Report">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="createdDate" type="xsd:string"/>
+<xsd:element minOccurs="0" name="fromDate" type="xsd:string"/>
+<xsd:element minOccurs="0" name="reportId" type="xsd:string"/>
+<xsd:element minOccurs="0" name="reportname" type="xsd:string"/>
+<xsd:element minOccurs="0" name="reportType" type="xsd:string"/>
+<xsd:element minOccurs="0" name="status" type="xsd:string"/>
+<xsd:element minOccurs="0" name="toDate" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="ArrayOfDailyReport">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="0" name="DailyReport" nillable="true" type="ns1:DailyReport"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="DailyReport">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="averagePosition" type="xsd:float"/>
+<xsd:element minOccurs="0" name="bidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="budgetAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="campaignDestURLAddr" type="xsd:string"/>
+<xsd:element minOccurs="0" name="campaignStatus" type="xsd:string"/>
+<xsd:element minOccurs="0" name="campaignId" type="xsd:string"/>
+<xsd:element minOccurs="0" name="categoryName" type="xsd:string"/>
+<xsd:element minOccurs="0" name="counterPercent" type="xsd:float"/>
+<xsd:element minOccurs="0" name="customerName" type="xsd:string"/>
+<xsd:element minOccurs="0" name="dailyImpressionCount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="dailyPFPClickCount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="dailyRawClickCount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="date" type="xsd:string"/>
+<xsd:element minOccurs="0" name="geographyName" type="xsd:string"/>
+<xsd:element minOccurs="0" name="geographyType" type="xsd:string"/>
+<xsd:element minOccurs="0" name="maxBidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="monthoDatePFPSpendAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="rankperBid" type="ns1:RankingPerBid"/>
+<xsd:element minOccurs="0" name="spendPercent" type="xsd:float"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="RankingPerBid">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="top10BidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="top2BidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="top3BidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="top4BidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="top5BidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="top6BidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="top7BidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="top8BidAmount" type="xsd:float"/>
+<xsd:element minOccurs="0" name="top9BidAmount" type="xsd:float"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getReportListRequestHeaders">
+    <wsdl:part name="username" element="tns:username"/>
+    <wsdl:part name="password" element="tns:password"/>
+    <wsdl:part name="companyId" element="tns:companyId"/>
+  </wsdl:message>
+  <wsdl:message name="getReportListRequest">
+    <wsdl:part name="parameters" element="tns:getReportList"/>
+  </wsdl:message>
+  <wsdl:message name="getDailySummaryReportRequest">
+    <wsdl:part name="parameters" element="tns:getDailySummaryReport"/>
+  </wsdl:message>
+  <wsdl:message name="scheduleReportRequestHeaders">
+    <wsdl:part name="username" element="tns:username"/>
+    <wsdl:part name="password" element="tns:password"/>
+    <wsdl:part name="companyId" element="tns:companyId"/>
+  </wsdl:message>
+  <wsdl:message name="getReportURLRequest">
+    <wsdl:part name="parameters" element="tns:getReportURL"/>
+  </wsdl:message>
+  <wsdl:message name="deleteReportResponse">
+    <wsdl:part name="parameters" element="tns:deleteReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getReportListResponse">
+    <wsdl:part name="parameters" element="tns:getReportListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getDailyReportResponse">
+    <wsdl:part name="parameters" element="tns:getDailyReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getDailySummaryReportRequestHeaders">
+    <wsdl:part name="username" element="tns:username"/>
+    <wsdl:part name="password" element="tns:password"/>
+    <wsdl:part name="companyId" element="tns:companyId"/>
+  </wsdl:message>
+  <wsdl:message name="getDailyReportRequest">
+    <wsdl:part name="parameters" element="tns:getDailyReport"/>
+  </wsdl:message>
+  <wsdl:message name="getDailyReportRequestHeaders">
+    <wsdl:part name="username" element="tns:username"/>
+    <wsdl:part name="password" element="tns:password"/>
+    <wsdl:part name="companyId" element="tns:companyId"/>
+  </wsdl:message>
+  <wsdl:message name="deleteReportRequestHeaders">
+    <wsdl:part name="username" element="tns:username"/>
+    <wsdl:part name="password" element="tns:password"/>
+    <wsdl:part name="companyId" element="tns:companyId"/>
+  </wsdl:message>
+  <wsdl:message name="getReportURLRequestHeaders">
+    <wsdl:part name="username" element="tns:username"/>
+    <wsdl:part name="password" element="tns:password"/>
+    <wsdl:part name="companyId" element="tns:companyId"/>
+  </wsdl:message>
+  <wsdl:message name="deleteReportRequest">
+    <wsdl:part name="parameters" element="tns:deleteReport"/>
+  </wsdl:message>
+  <wsdl:message name="getDailySummaryReportResponse">
+    <wsdl:part name="parameters" element="tns:getDailySummaryReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="scheduleReportRequest">
+    <wsdl:part name="parameters" element="tns:scheduleReport"/>
+  </wsdl:message>
+  <wsdl:message name="getReportURLResponse">
+    <wsdl:part name="parameters" element="tns:getReportURLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="scheduleReportResponse">
+    <wsdl:part name="parameters" element="tns:scheduleReportResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ReportingService">
+    <wsdl:operation name="scheduleReport">
+      <wsdl:input name="scheduleReportRequest" message="tns:scheduleReportRequest"/>
+      <wsdl:output name="scheduleReportResponse" message="tns:scheduleReportResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getReportURL">
+      <wsdl:input name="getReportURLRequest" message="tns:getReportURLRequest"/>
+      <wsdl:output name="getReportURLResponse" message="tns:getReportURLResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="deleteReport">
+      <wsdl:input name="deleteReportRequest" message="tns:deleteReportRequest"/>
+      <wsdl:output name="deleteReportResponse" message="tns:deleteReportResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySummaryReport">
+      <wsdl:input name="getDailySummaryReportRequest" message="tns:getDailySummaryReportRequest"/>
+      <wsdl:output name="getDailySummaryReportResponse" message="tns:getDailySummaryReportResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getReportList">
+      <wsdl:input name="getReportListRequest" message="tns:getReportListRequest"/>
+      <wsdl:output name="getReportListResponse" message="tns:getReportListResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getDailyReport">
+      <wsdl:input name="getDailyReportRequest" message="tns:getDailyReportRequest"/>
+      <wsdl:output name="getDailyReportResponse" message="tns:getDailyReportResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ReportingServiceHttpBinding" type="tns:ReportingService">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="scheduleReport">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="scheduleReportRequest">
+        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="tns:scheduleReportRequestHeaders" part="password" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:scheduleReportRequestHeaders" part="companyId" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:scheduleReportRequestHeaders" part="username" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="scheduleReportResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReportURL">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getReportURLRequest">
+        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="tns:getReportURLRequestHeaders" part="password" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:getReportURLRequestHeaders" part="companyId" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:getReportURLRequestHeaders" part="username" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getReportURLResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteReport">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="deleteReportRequest">
+        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="tns:deleteReportRequestHeaders" part="password" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:deleteReportRequestHeaders" part="companyId" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:deleteReportRequestHeaders" part="username" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="deleteReportResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDailySummaryReport">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getDailySummaryReportRequest">
+        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="tns:getDailySummaryReportRequestHeaders" part="password" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:getDailySummaryReportRequestHeaders" part="companyId" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:getDailySummaryReportRequestHeaders" part="username" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getDailySummaryReportResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReportList">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getReportListRequest">
+        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="tns:getReportListRequestHeaders" part="password" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:getReportListRequestHeaders" part="companyId" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:getReportListRequestHeaders" part="username" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getReportListResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDailyReport">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getDailyReportRequest">
+        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="tns:getDailyReportRequestHeaders" part="password" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:getDailyReportRequestHeaders" part="companyId" use="literal">
+        </wsdlsoap:header>
+        <wsdlsoap:header message="tns:getDailyReportRequestHeaders" part="username" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getDailyReportResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReportingService">
+    <wsdl:port name="ReportingServiceHttpPort" binding="tns:ReportingServiceHttpBinding">
+      <wsdlsoap:address location="http://services.superpages.com/spapi/services/ReportingService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
