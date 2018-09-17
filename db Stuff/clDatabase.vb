@@ -455,27 +455,29 @@ Public Class clDatabase
 
         'Locate columns assigning integer to variables
         For ncount = 0 To Columns.GetUpperBound(0)
-            Select Case Columns(ncount).ToLower
-                Case "campaign" : cCampaign = ncount
-                Case "adgroup" : cAdGroup = ncount
-                Case "keyword" : cKeyword = ncount
-                Case "impressions" : cImpressions = ncount
-                Case "clicks" : cClicks = ncount
-                Case "ctr" : cCTR = ncount
-                Case "cpc" : cCPC = ncount
-                Case "conversions" : cConversions = ncount
-                Case "viewthroughconv" : cViewThroughConv = ncount
-                Case "convoneclick" : cConvOneClick = ncount
-                Case "convvalue" : cConvValue = ncount
-                Case "clickconvrate" : cClickConvRate = ncount
-                Case "costperconv" : cCostPerConv = ncount
-                Case "revenue" : cRevenue = ncount
-                Case "roas" : cROAS = ncount
-                Case "cost" : cCost = ncount
-                Case "assists" : cAssists = ncount
-                Case "avgpos" : cAvgPos = ncount
-                Case "trans" : cTrans = ncount
-            End Select
+            If Not Columns(ncount) Is Nothing Then
+                Select Case Columns(ncount).ToLower
+                    Case "campaign" : cCampaign = ncount
+                    Case "adgroup" : cAdGroup = ncount
+                    Case "keyword" : cKeyword = ncount
+                    Case "impressions" : cImpressions = ncount
+                    Case "clicks" : cClicks = ncount
+                    Case "ctr" : cCTR = ncount
+                    Case "cpc" : cCPC = ncount
+                    Case "conversions" : cConversions = ncount
+                    Case "viewthroughconv" : cViewThroughConv = ncount
+                    Case "convoneclick" : cConvOneClick = ncount
+                    Case "convvalue" : cConvValue = ncount
+                    Case "clickconvrate" : cClickConvRate = ncount
+                    Case "costperconv" : cCostPerConv = ncount
+                    Case "revenue" : cRevenue = ncount
+                    Case "roas" : cROAS = ncount
+                    Case "cost" : cCost = ncount
+                    Case "assists" : cAssists = ncount
+                    Case "avgpos" : cAvgPos = ncount
+                    Case "trans" : cTrans = ncount
+                End Select
+            End If
         Next
 
         'No data get out
@@ -880,8 +882,8 @@ Public Class clDatabase
         Dim sResult As String = "[Date],CustomerID,EngineID"
         Dim nCount As Integer
         For nCount = Columns.GetLowerBound(0) To Columns.GetUpperBound(0)
-            If (Columns(nCount).ToLower <> "engine") Then
-                If Not IsNothing(Columns(nCount)) Then
+            If Not IsNothing(Columns(nCount)) Then
+                If (Columns(nCount).ToLower <> "engine") Then
                     If Columns(nCount).Length > 0 Then sResult = sResult & "," & Columns(nCount)
                 End If
             End If
@@ -999,25 +1001,27 @@ Public Class clDatabase
         Dim sType As String
 
         For nCount = Columns.GetLowerBound(0) To Columns.GetUpperBound(0)
-            If Columns(nCount).Length > 0 Then
-                If Columns(nCount).ToLower <> "engine" Then
-                    sType = DataTypes(Columns(nCount).ToLower)
+            If Not IsNothing(Columns(nCount)) Then
+                If Columns(nCount).Length > 0 Then
+                    If Columns(nCount).ToLower <> "engine" Then
+                        sType = DataTypes(Columns(nCount).ToLower)
 
-                    Select Case sType.ToUpper
-                        Case "STRING"
-                            sTemp = Replace(Data(nCount), "'", "''")
-                            sResult = sResult & ",'" & sTemp & "'"
-                        Case Else
-                            If Data(nCount).Length > 0 Then
-                                If IsNumeric(Data(nCount)) Then
-                                    sResult = sResult & "," & Data(nCount)
+                        Select Case sType.ToUpper
+                            Case "STRING"
+                                sTemp = Replace(Data(nCount), "'", "''")
+                                sResult = sResult & ",'" & sTemp & "'"
+                            Case Else
+                                If Data(nCount).Length > 0 Then
+                                    If IsNumeric(Data(nCount)) Then
+                                        sResult = sResult & "," & Data(nCount)
+                                    Else
+                                        sResult = sResult & ",NULL"
+                                    End If
                                 Else
                                     sResult = sResult & ",NULL"
                                 End If
-                            Else
-                                sResult = sResult & ",NULL"
-                            End If
-                    End Select
+                        End Select
+                    End If
                 End If
             End If
         Next
@@ -1148,27 +1152,29 @@ Public Class clDatabase
         Dim sType As String
 
         For nCount = Columns.GetLowerBound(0) To Columns.GetUpperBound(0)
-            If Columns(nCount).Length > 0 Then
-                If Columns(nCount).ToUpper <> "KEYWORD" Then
-                    If Columns(nCount).ToUpper <> "ADGROUP" Then
-                        If Columns(nCount).ToUpper <> "CAMPAIGN" Then
-                            If Columns(nCount).ToUpper <> "ENGINE" Then
-                                sType = DataTypes(Columns(nCount).ToLower)
-                                Select Case sType.ToUpper
-                                    Case "STRING"
-                                        sTemp = Replace(Data(nCount), "'", "''")
-                                        sResult = sResult & "," & Columns(nCount) & "='" & sTemp & "'"
-                                    Case Else
-                                        If Data(nCount).Length > 0 Then
-                                            If IsNumeric(Data(nCount)) Then
-                                                sResult = sResult & "," & Columns(nCount) & "=" & Data(nCount).ToString
+            If Not IsNothing(Columns(nCount)) Then
+                If Columns(nCount).Length > 0 Then
+                    If Columns(nCount).ToUpper <> "KEYWORD" Then
+                        If Columns(nCount).ToUpper <> "ADGROUP" Then
+                            If Columns(nCount).ToUpper <> "CAMPAIGN" Then
+                                If Columns(nCount).ToUpper <> "ENGINE" Then
+                                    sType = DataTypes(Columns(nCount).ToLower)
+                                    Select Case sType.ToUpper
+                                        Case "STRING"
+                                            sTemp = Replace(Data(nCount), "'", "''")
+                                            sResult = sResult & "," & Columns(nCount) & "='" & sTemp & "'"
+                                        Case Else
+                                            If Data(nCount).Length > 0 Then
+                                                If IsNumeric(Data(nCount)) Then
+                                                    sResult = sResult & "," & Columns(nCount) & "=" & Data(nCount).ToString
+                                                Else
+                                                    sResult = sResult & "," & Columns(nCount) & "=NULL"
+                                                End If
                                             Else
                                                 sResult = sResult & "," & Columns(nCount) & "=NULL"
                                             End If
-                                        Else
-                                            sResult = sResult & "," & Columns(nCount) & "=NULL"
-                                        End If
-                                End Select
+                                    End Select
+                                End If
                             End If
                         End If
                     End If

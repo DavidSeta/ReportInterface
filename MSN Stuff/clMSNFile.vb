@@ -1,4 +1,5 @@
 Imports System.IO
+Imports System.Text
 Imports System.Data
 Imports System.Data.SqlClient
 Imports System.Collections.Generic
@@ -6,7 +7,10 @@ Imports System.Collections.Generic
 Public Class clMSNFile
     Private Files As String
     Private DirectoryNamesAsRecID As Boolean = False
-
+    'Added 8/10/2015 for ProductPartitionReporting
+    Private nColumnImp As Integer = -1
+    Private nColumnPG As Integer = -1
+    Private nColumnType As Integer = -1
     Private nColumnDate As Integer = -1
     Private _Columns As Hashtable = New Hashtable()
     Private _ColTypes As Hashtable = New Hashtable()
@@ -84,14 +88,23 @@ Public Class clMSNFile
     Private Function Processfile_CSV(ByVal sFile As String, ByVal oClient As Clients, ByVal FileDate As Date, ByVal sDelim As Char, ByVal bFlexEOM As Boolean) As Boolean
         Debug.Print("Processing CSV")
 
+        Dim stPG() As String
+        Dim strPG As String
+        Dim sKeywordLine As New StringBuilder()
+        Dim sPG As String
+        Dim sExtractPG As String
+        Dim nCnt As Integer
+
         Dim sMSNAcctID As String = oClient.MSN.AccountID
 
-
+        Dim s() As String
         Dim sCustomerID As String = oClient.CustID
         Dim sCustomerName As String = oClient.Name
 
         Dim sHeader(11) As String
         Dim nCount As Integer
+
+        Dim bPGSkip As Boolean
         Dim fs As StreamReader = File.OpenText(sFile)
         For nCount = 1 To 11
             sHeader(nCount) = fs.ReadLine
@@ -104,9 +117,10 @@ Public Class clMSNFile
         oDB.CustomerID = sCustomerID
         oDB.CustomerName = sCustomerName
 
+        'Get report column names - convert into SQL PerfData table column names
         oDB.Columns = ParseColumns(sHeader(11), sDelim)
         oDB.DataTypes = _ColTypes
-
+        Dim intImp As Integer
         Dim nLine As Long = 0
         Dim sLine As String
         Dim conn As New SqlConnection(ConnectionString)
@@ -114,28 +128,88 @@ Public Class clMSNFile
         conn.Open()
         cmd.Connection = conn
         cmd.CommandTimeout = 0
+
+        'Read each deatil line - filter out when Imp = 0 and new ProductPartitionReport.PartitionType = SubDivision
         While Not fs.EndOfStream
             sLine = fs.ReadLine
             nLine += 1
             RaiseEvent NewLine(nLine.ToString)
-
+            sPG = ""
+            sExtractPG = ""
+            sKeywordLine.Length = 0
+            bPGSkip = False
+            'ParseColumns above will flag as ProductGroup Report Column via nColumnPG
             If sLine.Length > 0 Then
                 oDB.Data = ParseMe(sLine, sDelim)
                 If oDB.IsdataValid Then
-                    If nColumnDate >= 0 Then
-                        oDB.myDate = CDate(oDB.Data(nColumnDate))
-                    End If
-
-                    If bFlexEOM = False Then
-                        oDB.UpdateSQL(oClient.IsArbitrage, cmd)
+                    'Determine if we have Impressions Data > 0
+                    If oDB.Data(nColumnImp).Length > 0 Then
+                        If IsNumeric(oDB.Data(nColumnImp)) Then
+                            intImp = Integer.Parse(oDB.Data(nColumnImp))
+                        Else
+                            intImp = 0
+                        End If
                     Else
-                        oDB.UpdateSQLFlexEOM(oClient.IsArbitrage, cmd)
+                        intImp = 0
                     End If
-                    Application.DoEvents()
-                End If
+                    If intImp > 0 Then
 
-            End If
-        End While
+                        'New logic 8/10/2015 to test for ProductGroup and skipping all sub-divisions types in order to properly balance
+                        If nColumnPG <> -1 Then
+                            sPG = oDB.Data(nColumnType).Trim
+
+                            If sPG.ToLower <> "unit" Then
+                                bPGSkip = True
+                            Else
+                                sPG = ""
+                                sKeywordLine.Length = 0
+                                bPGSkip = False
+                                'We have a unit record, now extract out the product group elements and resolve item for writing to DB
+                                s = ParsePG(oDB.Data(nColumnPG).Trim, "\")
+                                nCnt = 0
+                                ReDim stPG(nCnt)
+                                For nCount = s.GetLowerBound(0) To s.GetUpperBound(0)
+                                    ReDim Preserve stPG(nCount)
+                                    sPG = s(nCount)
+                                    sPG = FindStr(sPG, "=")
+                                    If sPG = "*" Or sPG.Length = 0 Then
+                                    Else
+                                        stPG(nCount) = sPG.Trim
+                                    End If
+                                Next
+                                'Now update the columns data with extracted values
+                                For nCnt = stPG.GetLowerBound(0) To stPG.GetUpperBound(0)
+                                    If Not stPG(nCnt) Is Nothing Then
+                                        If nCnt = stPG.GetUpperBound(0) Then
+                                            sKeywordLine.Append(" Item = " & stPG(nCnt).Trim)
+                                        Else
+                                            sKeywordLine.Append(s(nCnt).Trim & "|")
+                                        End If
+
+                                    End If
+                                Next
+                                oDB.Data(nColumnPG) = sKeywordLine.ToString
+                            End If
+                        End If
+
+                        'Have data ready for update/add to PerfData
+                        If Not bPGSkip Then
+                            If nColumnDate >= 0 Then
+                                oDB.myDate = CDate(oDB.Data(nColumnDate))
+                            End If
+                            If bFlexEOM = False Then
+                                oDB.UpdateSQL(oClient.IsArbitrage, cmd)
+                            Else
+                                oDB.UpdateSQLFlexEOM(oClient.IsArbitrage, cmd)
+                            End If
+                            Application.DoEvents()
+                        End If
+
+                    End If  'intImp > 0
+                End If      'oDB.IsdataValid 
+            End If          'sLine.Length > 0
+        End While           'Read all input file line items
+
         'cmd.CommandText = "exec ArbitragePriceAdjust "
         'cmd.ExecuteScalar()
 
@@ -236,15 +310,29 @@ Public Class clMSNFile
         Dim sColumns() As String = ParseMe(sLine, sDelim)
         Dim nCount As Integer
 
-        'Find Date Column
+        'Find Date and ProductGroup Column
         nColumnDate = -1
+        nColumnPG = -1
+        nColumnImp = -1
+        nColumnType = -1
         For nCount = sColumns.GetLowerBound(0) To sColumns.GetUpperBound(0)
+            'Added Aug 10, 2015 for ProductPartitionReport - only sum for *
+            If sColumns(nCount).ToLower = "impressions" Then
+                nColumnImp = nCount
+            End If
+            If sColumns(nCount).ToLower = "productgroup" Then
+                nColumnPG = nCount
+            End If
+            If sColumns(nCount).ToLower = "productpartitiontype" Then
+                nColumnType = nCount
+            End If
             If sColumns(nCount).ToLower = "gregoriandate" Then
                 nColumnDate = nCount
                 sColumns(nCount) = ""
             Else
                 sColumns(nCount) = _Columns(sColumns(nCount))
             End If
+
         Next
 
         Return sColumns
@@ -319,7 +407,41 @@ Public Class clMSNFile
         conn.Close()
         Return intCount.ToString
     End Function
+    Private Function ParsePG(ByVal sLine As String, ByVal sDelim As String) As String()
+        Dim s() As String
+        Dim sTemp As String = sLine
 
+        sLine = sLine.Replace(sDelim, "|")     'Change the parse character
+        sLine = sLine.Substring(1, sLine.Length - 2)            'Remove 1st and last qoute
+        sLine = sLine.Replace(",", "")                          'Remove any comma seperators remaining
+        s = sLine.Split("|")                                    'Now parse it
+
+        Dim nCount As Integer
+        For nCount = 0 To s.GetUpperBound(0)
+            If s(nCount).Contains(",") Then
+                If IsNumeric(s(nCount)) Then
+                    s(nCount).Replace(",", "")                      'Remove comma if this is a numeric string
+                End If
+            End If
+        Next
+
+        Return s
+    End Function
+    Private Function FindStr(ByVal sLine As String, ByVal sDelim As Char) As String
+        Dim s As String
+        s = sLine
+        If s.IndexOf(sDelim) <> -1 Then
+            s = s.Substring(s.LastIndexOf("=") + 1)
+        Else
+            If s.IndexOf("$t38") <> -1 Then
+                s = s.Substring(s.IndexOf("$t38") + 1)
+                s = s.Substring(3)
+            End If
+        End If
+
+        Return s.Trim
+
+    End Function
 #End Region 'Private Methods
 
     Private Function GetFileDate(ByVal sFileName As String) As Date

@@ -24,71 +24,71 @@ Imports System.Xml.Serialization
 Namespace GoogleWebServices
     
     '''<remarks/>
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"),  _
-     System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.ComponentModel.DesignerCategoryAttribute("code"),  _
-     System.Web.Services.WebServiceBindingAttribute(Name:="ReportDefinitionServiceSoapBinding", [Namespace]:="https://adwords.google.com/api/adwords/cm/v201409")>  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"), _
+     System.Diagnostics.DebuggerStepThroughAttribute(), _
+     System.ComponentModel.DesignerCategoryAttribute("code"), _
+     System.Web.Services.WebServiceBindingAttribute(Name:="ReportDefinitionServiceSoapBinding", [Namespace]:="https://adwords.google.com/api/adwords/cm/v201710")> _
     Partial Public Class ReportDefinitionService
         Inherits System.Web.Services.Protocols.SoapHttpClientProtocol
-        
+
         Private requestHeaderField As RequestHeader
-        
+
         Private responseHeaderField As ResponseHeader
-        
+
         Private getReportFieldsOperationCompleted As System.Threading.SendOrPostCallback
-        
+
         '''<remarks/>
         Public Sub New()
-            MyBase.New
-            Me.Url = "https://adwords.google.com/api/adwords/cm/v201409/ReportDefinitionService"
+            MyBase.New()
+            Me.Url = "https://adwords.google.com/api/adwords/cm/v201710/ReportDefinitionService"
         End Sub
-        
+
         Public Property RequestHeader() As RequestHeader
             Get
                 Return Me.requestHeaderField
             End Get
-            Set
+            Set(value As RequestHeader)
                 Me.requestHeaderField = value
             End Set
         End Property
-        
+
         Public Property ResponseHeader() As ResponseHeader
             Get
                 Return Me.responseHeaderField
             End Get
-            Set
+            Set(value As ResponseHeader)
                 Me.responseHeaderField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Event getReportFieldsCompleted As getReportFieldsCompletedEventHandler
-        
+
         '''<remarks/>
-        <System.Web.Services.Protocols.SoapHeaderAttribute("ResponseHeader", Direction:=System.Web.Services.Protocols.SoapHeaderDirection.Out),  _
-         System.Web.Services.Protocols.SoapHeaderAttribute("RequestHeader"),  _
-         System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace:="https://adwords.google.com/api/adwords/cm/v201409", ResponseNamespace:="https://adwords.google.com/api/adwords/cm/v201409", Use:=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle:=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)>  _
+        <System.Web.Services.Protocols.SoapHeaderAttribute("ResponseHeader", Direction:=System.Web.Services.Protocols.SoapHeaderDirection.Out), _
+         System.Web.Services.Protocols.SoapHeaderAttribute("RequestHeader"), _
+         System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace:="https://adwords.google.com/api/adwords/cm/v201710", ResponseNamespace:="https://adwords.google.com/api/adwords/cm/v201710", Use:=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle:=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)> _
         Public Function getReportFields(ByVal reportType As ReportDefinitionReportType, <System.Xml.Serialization.XmlIgnoreAttribute()> ByVal reportTypeSpecified As Boolean) As <System.Xml.Serialization.XmlElementAttribute("rval")> ReportDefinitionField()
             Dim results() As Object = Me.Invoke("getReportFields", New Object() {reportType, reportTypeSpecified})
-            Return CType(results(0),ReportDefinitionField())
+            Return CType(results(0), ReportDefinitionField())
         End Function
-        
+
         '''<remarks/>
         Public Function BegingetReportFields(ByVal reportType As ReportDefinitionReportType, ByVal reportTypeSpecified As Boolean, ByVal callback As System.AsyncCallback, ByVal asyncState As Object) As System.IAsyncResult
             Return Me.BeginInvoke("getReportFields", New Object() {reportType, reportTypeSpecified}, callback, asyncState)
         End Function
-        
+
         '''<remarks/>
         Public Function EndgetReportFields(ByVal asyncResult As System.IAsyncResult) As ReportDefinitionField()
             Dim results() As Object = Me.EndInvoke(asyncResult)
-            Return CType(results(0),ReportDefinitionField())
+            Return CType(results(0), ReportDefinitionField())
         End Function
-        
+
         '''<remarks/>
         Public Overloads Sub getReportFieldsAsync(ByVal reportType As ReportDefinitionReportType, ByVal reportTypeSpecified As Boolean)
             Me.getReportFieldsAsync(reportType, reportTypeSpecified, Nothing)
         End Sub
-        
+
         '''<remarks/>
         Public Overloads Sub getReportFieldsAsync(ByVal reportType As ReportDefinitionReportType, ByVal reportTypeSpecified As Boolean, ByVal userState As Object)
             If (Me.getReportFieldsOperationCompleted Is Nothing) Then
@@ -96,14 +96,14 @@ Namespace GoogleWebServices
             End If
             Me.InvokeAsync("getReportFields", New Object() {reportType, reportTypeSpecified}, Me.getReportFieldsOperationCompleted, userState)
         End Sub
-        
+
         Private Sub OngetReportFieldsOperationCompleted(ByVal arg As Object)
             If (Not (Me.getReportFieldsCompletedEvent) Is Nothing) Then
-                Dim invokeArgs As System.Web.Services.Protocols.InvokeCompletedEventArgs = CType(arg,System.Web.Services.Protocols.InvokeCompletedEventArgs)
+                Dim invokeArgs As System.Web.Services.Protocols.InvokeCompletedEventArgs = CType(arg, System.Web.Services.Protocols.InvokeCompletedEventArgs)
                 RaiseEvent getReportFieldsCompleted(Me, New getReportFieldsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState))
             End If
         End Sub
-        
+
         '''<remarks/>
         Public Shadows Sub CancelAsync(ByVal userState As Object)
             MyBase.CancelAsync(userState)
@@ -111,578 +111,578 @@ Namespace GoogleWebServices
     End Class
     
     '''<remarks/>
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"),  _
-     System.SerializableAttribute(),  _
-     System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.ComponentModel.DesignerCategoryAttribute("code"),  _
-     System.Xml.Serialization.XmlTypeAttribute([Namespace]:="https://adwords.google.com/api/adwords/cm/v201409"),  _
-     System.Xml.Serialization.XmlRootAttribute("ResponseHeader", [Namespace]:="https://adwords.google.com/api/adwords/cm/v201409", IsNullable:=false)>  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"), _
+     System.SerializableAttribute(), _
+     System.Diagnostics.DebuggerStepThroughAttribute(), _
+     System.ComponentModel.DesignerCategoryAttribute("code"), _
+     System.Xml.Serialization.XmlTypeAttribute([Namespace]:="https://adwords.google.com/api/adwords/cm/v201710"), _
+     System.Xml.Serialization.XmlRootAttribute("ResponseHeader", [Namespace]:="https://adwords.google.com/api/adwords/cm/v201710", IsNullable:=False)> _
     Partial Public Class ResponseHeader
         Inherits System.Web.Services.Protocols.SoapHeader
-        
+
         Private requestIdField As String
-        
+
         Private serviceNameField As String
-        
+
         Private methodNameField As String
-        
+
         Private operationsField As Long
-        
+
         Private operationsFieldSpecified As Boolean
-        
+
         Private responseTimeField As Long
-        
+
         Private responseTimeFieldSpecified As Boolean
-        
+
         '''<remarks/>
         Public Property requestId() As String
             Get
                 Return Me.requestIdField
             End Get
-            Set
+            Set(value As String)
                 Me.requestIdField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property serviceName() As String
             Get
                 Return Me.serviceNameField
             End Get
-            Set
+            Set(value As String)
                 Me.serviceNameField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property methodName() As String
             Get
                 Return Me.methodNameField
             End Get
-            Set
+            Set(value As String)
                 Me.methodNameField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property operations() As Long
             Get
                 Return Me.operationsField
             End Get
-            Set
+            Set(value As Long)
                 Me.operationsField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property operationsSpecified() As Boolean
             Get
                 Return Me.operationsFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.operationsFieldSpecified = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property responseTime() As Long
             Get
                 Return Me.responseTimeField
             End Get
-            Set
+            Set(value As Long)
                 Me.responseTimeField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property responseTimeSpecified() As Boolean
             Get
                 Return Me.responseTimeFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.responseTimeFieldSpecified = value
             End Set
         End Property
     End Class
     
     '''<remarks/>
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"),  _
-     System.SerializableAttribute(),  _
-     System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.ComponentModel.DesignerCategoryAttribute("code"),  _
-     System.Xml.Serialization.XmlTypeAttribute([Namespace]:="https://adwords.google.com/api/adwords/cm/v201409")>  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"), _
+     System.SerializableAttribute(), _
+     System.Diagnostics.DebuggerStepThroughAttribute(), _
+     System.ComponentModel.DesignerCategoryAttribute("code"), _
+     System.Xml.Serialization.XmlTypeAttribute([Namespace]:="https://adwords.google.com/api/adwords/cm/v201710")> _
     Partial Public Class EnumValuePair
-        
+
         Private enumValueField As String
-        
+
         Private enumDisplayValueField As String
-        
+
         '''<remarks/>
         Public Property enumValue() As String
             Get
                 Return Me.enumValueField
             End Get
-            Set
+            Set(value As String)
                 Me.enumValueField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property enumDisplayValue() As String
             Get
                 Return Me.enumDisplayValueField
             End Get
-            Set
+            Set(value As String)
                 Me.enumDisplayValueField = value
             End Set
         End Property
     End Class
     
     '''<remarks/>
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"),  _
-     System.SerializableAttribute(),  _
-     System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.ComponentModel.DesignerCategoryAttribute("code"),  _
-     System.Xml.Serialization.XmlTypeAttribute([Namespace]:="https://adwords.google.com/api/adwords/cm/v201409")>  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"), _
+     System.SerializableAttribute(), _
+     System.Diagnostics.DebuggerStepThroughAttribute(), _
+     System.ComponentModel.DesignerCategoryAttribute("code"), _
+     System.Xml.Serialization.XmlTypeAttribute([Namespace]:="https://adwords.google.com/api/adwords/cm/v201710")> _
     Partial Public Class ReportDefinitionField
-        
+
         Private fieldNameField As String
-        
+
         Private displayFieldNameField As String
-        
+
         Private xmlAttributeNameField As String
-        
+
         Private fieldTypeField As String
-        
+
         Private fieldBehaviorField As String
-        
+
         Private enumValuesField() As String
-        
+
         Private canSelectField As Boolean
-        
+
         Private canSelectFieldSpecified As Boolean
-        
+
         Private canFilterField As Boolean
-        
+
         Private canFilterFieldSpecified As Boolean
-        
+
         Private isEnumTypeField As Boolean
-        
+
         Private isEnumTypeFieldSpecified As Boolean
-        
+
         Private isBetaField As Boolean
-        
+
         Private isBetaFieldSpecified As Boolean
-        
+
         Private isZeroRowCompatibleField As Boolean
-        
+
         Private isZeroRowCompatibleFieldSpecified As Boolean
-        
+
         Private enumValuePairsField() As EnumValuePair
-        
+
         '''<remarks/>
         Public Property fieldName() As String
             Get
                 Return Me.fieldNameField
             End Get
-            Set
+            Set(value As String)
                 Me.fieldNameField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property displayFieldName() As String
             Get
                 Return Me.displayFieldNameField
             End Get
-            Set
+            Set(value As String)
                 Me.displayFieldNameField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property xmlAttributeName() As String
             Get
                 Return Me.xmlAttributeNameField
             End Get
-            Set
+            Set(value As String)
                 Me.xmlAttributeNameField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property fieldType() As String
             Get
                 Return Me.fieldTypeField
             End Get
-            Set
+            Set(value As String)
                 Me.fieldTypeField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property fieldBehavior() As String
             Get
                 Return Me.fieldBehaviorField
             End Get
-            Set
+            Set(value As String)
                 Me.fieldBehaviorField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlElementAttribute("enumValues")>  _
+        <System.Xml.Serialization.XmlElementAttribute("enumValues")> _
         Public Property enumValues() As String()
             Get
                 Return Me.enumValuesField
             End Get
-            Set
+            Set(value As String())
                 Me.enumValuesField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property canSelect() As Boolean
             Get
                 Return Me.canSelectField
             End Get
-            Set
+            Set(value As Boolean)
                 Me.canSelectField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property canSelectSpecified() As Boolean
             Get
                 Return Me.canSelectFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.canSelectFieldSpecified = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property canFilter() As Boolean
             Get
                 Return Me.canFilterField
             End Get
-            Set
+            Set(value As Boolean)
                 Me.canFilterField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property canFilterSpecified() As Boolean
             Get
                 Return Me.canFilterFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.canFilterFieldSpecified = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property isEnumType() As Boolean
             Get
                 Return Me.isEnumTypeField
             End Get
-            Set
+            Set(value As Boolean)
                 Me.isEnumTypeField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property isEnumTypeSpecified() As Boolean
             Get
                 Return Me.isEnumTypeFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.isEnumTypeFieldSpecified = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property isBeta() As Boolean
             Get
                 Return Me.isBetaField
             End Get
-            Set
+            Set(value As Boolean)
                 Me.isBetaField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property isBetaSpecified() As Boolean
             Get
                 Return Me.isBetaFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.isBetaFieldSpecified = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property isZeroRowCompatible() As Boolean
             Get
                 Return Me.isZeroRowCompatibleField
             End Get
-            Set
+            Set(value As Boolean)
                 Me.isZeroRowCompatibleField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property isZeroRowCompatibleSpecified() As Boolean
             Get
                 Return Me.isZeroRowCompatibleFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.isZeroRowCompatibleFieldSpecified = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlElementAttribute("enumValuePairs")>  _
+        <System.Xml.Serialization.XmlElementAttribute("enumValuePairs")> _
         Public Property enumValuePairs() As EnumValuePair()
             Get
                 Return Me.enumValuePairsField
             End Get
-            Set
+            Set(value As EnumValuePair())
                 Me.enumValuePairsField = value
             End Set
         End Property
     End Class
     
     '''<remarks/>
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"),  _
-     System.SerializableAttribute(),  _
-     System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.ComponentModel.DesignerCategoryAttribute("code"),  _
-     System.Xml.Serialization.XmlTypeAttribute([Namespace]:="https://adwords.google.com/api/adwords/cm/v201409"),  _
-     System.Xml.Serialization.XmlRootAttribute("RequestHeader", [Namespace]:="https://adwords.google.com/api/adwords/cm/v201409", IsNullable:=false)>  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"), _
+     System.SerializableAttribute(), _
+     System.Diagnostics.DebuggerStepThroughAttribute(), _
+     System.ComponentModel.DesignerCategoryAttribute("code"), _
+     System.Xml.Serialization.XmlTypeAttribute([Namespace]:="https://adwords.google.com/api/adwords/cm/v201710"), _
+     System.Xml.Serialization.XmlRootAttribute("RequestHeader", [Namespace]:="https://adwords.google.com/api/adwords/cm/v201710", IsNullable:=False)> _
     Partial Public Class RequestHeader
         Inherits System.Web.Services.Protocols.SoapHeader
-        
+
         Private clientCustomerIdField As String
-        
+
         Private developerTokenField As String
-        
+
         Private userAgentField As String
-        
+
         Private validateOnlyField As Boolean
-        
+
         Private validateOnlyFieldSpecified As Boolean
-        
+
         Private partialFailureField As Boolean
-        
+
         Private partialFailureFieldSpecified As Boolean
-        
+
         '''<remarks/>
         Public Property clientCustomerId() As String
             Get
                 Return Me.clientCustomerIdField
             End Get
-            Set
+            Set(value As String)
                 Me.clientCustomerIdField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property developerToken() As String
             Get
                 Return Me.developerTokenField
             End Get
-            Set
+            Set(value As String)
                 Me.developerTokenField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property userAgent() As String
             Get
                 Return Me.userAgentField
             End Get
-            Set
+            Set(value As String)
                 Me.userAgentField = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property validateOnly() As Boolean
             Get
                 Return Me.validateOnlyField
             End Get
-            Set
+            Set(value As Boolean)
                 Me.validateOnlyField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property validateOnlySpecified() As Boolean
             Get
                 Return Me.validateOnlyFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.validateOnlyFieldSpecified = value
             End Set
         End Property
-        
+
         '''<remarks/>
         Public Property partialFailure() As Boolean
             Get
                 Return Me.partialFailureField
             End Get
-            Set
+            Set(value As Boolean)
                 Me.partialFailureField = value
             End Set
         End Property
-        
+
         '''<remarks/>
-        <System.Xml.Serialization.XmlIgnoreAttribute()>  _
+        <System.Xml.Serialization.XmlIgnoreAttribute()> _
         Public Property partialFailureSpecified() As Boolean
             Get
                 Return Me.partialFailureFieldSpecified
             End Get
-            Set
+            Set(value As Boolean)
                 Me.partialFailureFieldSpecified = value
             End Set
         End Property
     End Class
     
     '''<remarks/>
-    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"),  _
-     System.SerializableAttribute(),  _
-     System.Xml.Serialization.XmlTypeAttribute(TypeName:="ReportDefinition.ReportType", [Namespace]:="https://adwords.google.com/api/adwords/cm/v201409")>  _
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.0.30319.17929"), _
+     System.SerializableAttribute(), _
+     System.Xml.Serialization.XmlTypeAttribute(TypeName:="ReportDefinition.ReportType", [Namespace]:="https://adwords.google.com/api/adwords/cm/v201710")> _
     Public Enum ReportDefinitionReportType
-        
+
         '''<remarks/>
         KEYWORDS_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         AD_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         URL_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         ADGROUP_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         CAMPAIGN_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         ACCOUNT_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         GEO_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         SEARCH_QUERY_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         AUTOMATIC_PLACEMENTS_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         CAMPAIGN_NEGATIVE_KEYWORDS_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         CAMPAIGN_NEGATIVE_PLACEMENTS_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         AD_EXTENSIONS_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         DESTINATION_URL_REPORT
-        
+
         '''<remarks/>
         SHARED_SET_REPORT
-        
+
         '''<remarks/>
         CAMPAIGN_SHARED_SET_REPORT
-        
+
         '''<remarks/>
         SHARED_SET_CRITERIA_REPORT
-        
+
         '''<remarks/>
         CREATIVE_CONVERSION_REPORT
-        
+
         '''<remarks/>
         CALL_METRICS_CALL_DETAILS_REPORT
-        
+
         '''<remarks/>
         KEYWORDLESS_QUERY_REPORT
-        
+
         '''<remarks/>
         KEYWORDLESS_CATEGORY_REPORT
-        
+
         '''<remarks/>
         CRITERIA_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         CLICK_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         BUDGET_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         BID_GOAL_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         DISPLAY_KEYWORD_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         PLACEHOLDER_FEED_ITEM_REPORT
-        
+
         '''<remarks/>
         PLACEMENT_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         CAMPAIGN_NEGATIVE_LOCATIONS_REPORT
-        
+
         '''<remarks/>
         GENDER_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         AGE_RANGE_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         CAMPAIGN_LOCATION_TARGET_REPORT
-        
+
         '''<remarks/>
         CAMPAIGN_AD_SCHEDULE_TARGET_REPORT
-        
+
         '''<remarks/>
         CAMPAIGN_PLATFORM_TARGET_REPORT
-        
+
         '''<remarks/>
         PAID_ORGANIC_QUERY_REPORT
-        
+
         '''<remarks/>
         AUDIENCE_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         DISPLAY_TOPICS_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         SHOPPING_PERFORMANCE_REPORT
-        
+
         '''<remarks/>
         PRODUCT_PARTITION_REPORT
-        
+
         '''<remarks/>
         PLACEHOLDER_REPORT
-        
+
         '''<remarks/>
         AD_CUSTOMIZERS_FEED_ITEM_REPORT
-        
+
         '''<remarks/>
         UNKNOWN
     End Enum

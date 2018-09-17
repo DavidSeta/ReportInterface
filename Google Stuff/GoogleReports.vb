@@ -41,11 +41,11 @@ Namespace GoogleWebServices
         ' 
         'The source identifier string to be used with ClientLogin API.
         ' 
-        Private Const SOURCE As String = "MV-AWAPI-DotNetLib-V201409"
-        Private Const URL As String = "https://adwords.google.com/api/adwords/reportdownload/v201409"
+        Private Const SOURCE As String = "PBJ-AWAPI-DotNetLib-v201601"
+        Private Const URL As String = "https://adwords.google.com/api/adwords/reportdownload/v201710"
         'Private Const URL As String = "https://adwords.google.com/api/adwords/reportdownload/v201109"
         Private Const clientLogInUrl As String = "https://www.google.com/accounts/ClientLogin"
-        Private Const authUrlFormat As String = "accountType=GOOGLE&Email={0}&Passwd={1}&source=Seta-AWAPI-DotNetLib-V201402&service=adwords"
+        Private Const authUrlFormat As String = "accountType=GOOGLE&Email={0}&Passwd={1}&source=Seta-AWAPI-DotNetLib-v201710&service=adwords"
 
         Private Const reportDef As String = "<reportDefinition><selector><fields>Date</fields>" + _
                 "<fields>Id</fields><fields>CampaignName</fields><fields>AdGroupName</fields>" + _
@@ -169,7 +169,8 @@ Namespace GoogleWebServices
         'ReqestReports(ByVal client As Clients) Called by frmMain.vb Start_Google()                    
         'Previous to V201109 one used ReqestReportID(ByVal client As Clients)                          
         'Return String with ReportID or verbiage reflecting an error occurred while requesting: "ERROR"
-        'Perform initialization                                                                        
+        'Perform initialization   
+        'SHOPPING_PERFORMANCE_REPORT - 9/3/2015 CHANGED
         '==============================================================================================
         Public Function ReqestReports(ByVal client As Clients) As String
             'Check if token set to expire
@@ -217,9 +218,9 @@ Namespace GoogleWebServices
             sreportDef = String.Format(reportDef, client.Google.StartDate.ToString("yyyyMMdd"), client.Google.EndDate.ToString("yyyyMMdd"))
 
             'Dim postParams As String = "__rdxml=" + sreportDef
-            Dim postParams As String = "__rdquery=SELECT Date, Id, CampaignName, AdGroupName, Criteria, CriteriaType, " & _
-            "Impressions, Clicks, Cost, AverageCpc, Ctr, Conversions, ViewThroughConversions, ConversionValue, ConversionsManyPerClick, " & _
-            "ConversionRate, CostPerConversion, AveragePosition  FROM CRITERIA_PERFORMANCE_REPORT  WHERE Impressions > 0 " & _
+            Dim postParams As String = "__rdquery=SELECT Date, CampaignName, AdGroupName, OfferId, " & _
+            "Impressions, Clicks, Cost, AverageCpc, Ctr, ConversionValue, Conversions, " & _
+            "ConversionRate, CostPerConversion  FROM SHOPPING_PERFORMANCE_REPORT  WHERE Impressions > 0 " & _
             "DURING {0},{1}&__fmt=XML"
             postParams = String.Format(postParams, client.Google.StartDate.ToString("yyyyMMdd"), client.Google.EndDate.ToString("yyyyMMdd"))
             Dim postBytes As Byte() = Encoding.UTF8.GetBytes(postParams)
