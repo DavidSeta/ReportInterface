@@ -50,7 +50,7 @@ Public Class AuthClient
     ' 
     'The source identifier string to be used with ClientLogin API.
     ' 
-    Const SOURCE As String = "MV-AWAPI-DotNetLib-V201402"
+    Const SOURCE As String = "PBJ-AWAPI-DotNetLib-V201506"
     ''' <summary>
     ''' The time at which access token was updated.
     ''' </summary>
@@ -177,6 +177,8 @@ Public Class AuthClient
         End If
         If values.ContainsKey("expires_in") Then
             Me.m_expiresIn = Integer.Parse(values("expires_in"))
+            'Force Expiry - troubleshooting on Aug 2015 after V201409 migration to V201506 
+            'Me.m_expiresIn = 60
         End If
 
         Me.m_updatedOn = DateTime.Now

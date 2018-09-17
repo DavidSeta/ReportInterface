@@ -103,7 +103,7 @@ Namespace MSNWebServices
             If UserAccessKey = "" Then UserAccessKey = EngAuth.MSNAccessKey
 
 
-            NewService()
+            'NewService()
         End Sub
         Public Function GetAccessTokens(uri As String) As String
             Dim response As HttpWebResponse
@@ -275,7 +275,7 @@ Namespace MSNWebServices
             Req.Aggregation = ReportAggregation.Daily
 
             'Build report columns
-            Array.Resize(Req.Columns, 14)
+            Array.Resize(Req.Columns, 15)
             Req.Columns(0) = KeywordPerformanceReportColumn.AccountName
             Req.Columns(1) = KeywordPerformanceReportColumn.CampaignName
             Req.Columns(2) = KeywordPerformanceReportColumn.AdGroupName
@@ -290,7 +290,7 @@ Namespace MSNWebServices
             Req.Columns(11) = KeywordPerformanceReportColumn.ConversionRate
             Req.Columns(12) = KeywordPerformanceReportColumn.Conversions
             Req.Columns(13) = KeywordPerformanceReportColumn.CostPerConversion
-
+            Req.Columns(14) = KeywordPerformanceReportColumn.Revenue
             Return Req
         End Function
 
@@ -320,6 +320,71 @@ Namespace MSNWebServices
         End Function
 #End Region 'CreateKeywordReportRequest (Overloaded)
 
+#Region " CreateProductPartitionPerformanceReportRequest "
+
+        Public Function CreateProductPlacementReportRequest(ByVal nAccountID As Long, ByVal dStartDate As Date, ByVal dEndDate As Date) As MSNWebServices.ProductPartitionPerformanceReportRequest
+            Dim Param As New ReportParameters
+            Param.StartDate = dStartDate
+            Param.EndDate = dEndDate
+            Param.AccountID = nAccountID
+            Dim intActID() As Long = {0}
+
+            intActID(0) = Param.AccountID
+
+            Dim Req As New MSNWebServices.ProductPartitionPerformanceReportRequest
+            'V5 Account handling
+            Req.Scope = New AccountThroughAdGroupReportScope
+            Req.Scope.AccountIds = intActID
+            Req.ReportName = "ProductPartitionReport " + Param.AccountID.ToString
+
+            'Req.Account = param.AccountID
+            Req.Language = MSNWebServices.ReportLanguage.English
+            Req.Format = Param.OuputFormat
+
+            'Date Range
+            Dim time = New MSNWebServices.ReportTime()
+            Dim dayStart As New MSNWebServices.Date()
+            Dim dayEnd As New MSNWebServices.Date()
+            Dim dtWorkDate As Date
+
+            dtWorkDate = Param.GetStartDate
+            dayStart.Day = dtWorkDate.Day
+            dayStart.Month = dtWorkDate.Month
+            dayStart.Year = dtWorkDate.Year
+
+            dtWorkDate = Param.GetEndDate
+            dayEnd.Day = dtWorkDate.Day
+            dayEnd.Month = dtWorkDate.Month
+            dayEnd.Year = dtWorkDate.Year
+
+            time.CustomDateRangeStart = dayStart
+            time.CustomDateRangeEnd = dayEnd
+            Req.Time = time
+            Req.Aggregation = ReportAggregation.Daily
+
+            'Build report columns
+            Array.Resize(Req.Columns, 15)
+            Req.Columns(0) = ProductPartitionPerformanceReportColumn.AccountName
+            Req.Columns(1) = ProductPartitionPerformanceReportColumn.CampaignName
+            Req.Columns(2) = ProductPartitionPerformanceReportColumn.AdGroupName
+            Req.Columns(3) = ProductPartitionPerformanceReportColumn.ProductGroup
+            Req.Columns(4) = ProductPartitionPerformanceReportColumn.TimePeriod
+            Req.Columns(5) = ProductPartitionPerformanceReportColumn.Impressions
+            Req.Columns(6) = ProductPartitionPerformanceReportColumn.Clicks
+            Req.Columns(7) = ProductPartitionPerformanceReportColumn.Ctr
+            Req.Columns(8) = ProductPartitionPerformanceReportColumn.AverageCpc
+            Req.Columns(9) = ProductPartitionPerformanceReportColumn.Spend
+            Req.Columns(10) = ProductPartitionPerformanceReportColumn.ConversionRate
+            Req.Columns(11) = ProductPartitionPerformanceReportColumn.Conversions
+            Req.Columns(12) = ProductPartitionPerformanceReportColumn.CostPerConversion
+            Req.Columns(13) = ProductPartitionPerformanceReportColumn.Revenue
+            Req.Columns(14) = ProductPartitionPerformanceReportColumn.PartitionType
+            Return Req
+
+        End Function
+
+#End Region 'ProductPlacementReportRequest 
+
         Private Function GetMyDir(ByVal Client As Clients) As String
             '----------------------------------------------------------------------------------------------------------------
             ' Changed 3/14/07 so directories are now RecID's instead of names
@@ -342,12 +407,43 @@ Namespace MSNWebServices
         Public Function ReqestReportID(ByVal Client As Clients) As String
             'Return Variable
             Dim myID As String
+            '====Start
 
-            'Build the Request via CreateKeywordReportRequest function 
-            Dim Request As MSNWebServices.KeywordPerformanceReportRequest = Me.CreateKeywordReportRequest(CLng(Client.MSN.AccountID), Client.MSN.StartDate, Client.MSN.EndDate)
-            'V5 New
-            'Build the ReportRequest to be sent to API. Instantiation of queueRequest populated the authentication data
-            queueRequest.ReportRequest = Request
+            'ReportingServiceClient will permit QueueReport method to send Request via QueueReportRequest
+            myService = New MSNWebServices.ReportingServiceClient
+
+            'QueueReportRequest object for sending via ReportingServiceClient obj above 
+            'and the Req object built in CreateKeywordReportRequest() function below
+            queueRequest = New MSNWebServices.SubmitGenerateReportRequest
+            queueRequest.ApplicationToken = Nothing
+            queueRequest.DeveloperToken = devToken
+            'OAuth Start
+            queueRequest.AuthenticationToken = accessToken
+            queueRequest.CustomerAccountId = Client.MSN.AccountID
+            queueRequest.CustomerId = "29183"
+            'queueRequest.UserName = Username
+            'queueRequest.Password = Password
+            'OAuth End
+
+            'QueueReportResponse object for obtaining results from API methods invoked
+            queueResponse = New MSNWebServices.SubmitGenerateReportResponse
+            'GetReportStatusResponse
+            statusResponse = New PollGenerateReportResponse
+
+            '======End
+            'New V9 Report for Bing Shopping Ads - 8/10/2015
+
+            'Build the Request via ProductPlacement for AccountID: 36001812
+            If Client.MSN.AccountID = "36001812" Then
+                Dim Request As MSNWebServices.ProductPartitionPerformanceReportRequest = Me.CreateProductPlacementReportRequest(CLng(Client.MSN.AccountID), Client.MSN.StartDate, Client.MSN.EndDate)
+                queueRequest.ReportRequest = Request
+            Else
+                'For all others build standard KeywordReport Request
+                'Build the Request via CreateKeywordReportRequest function 
+                Dim Request As MSNWebServices.KeywordPerformanceReportRequest = Me.CreateKeywordReportRequest(CLng(Client.MSN.AccountID), Client.MSN.StartDate, Client.MSN.EndDate)
+                queueRequest.ReportRequest = Request
+            End If
+
 
             ' Submit the report request. This will throw an exception if 
             ' an error occurs.
